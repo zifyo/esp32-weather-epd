@@ -89,9 +89,13 @@ extern const char *TXT_UNITS_PRES_MILLIBARS;
 extern const char *TXT_UNITS_PRES_ATMOSPHERES;
 extern const char *TXT_UNITS_PRES_GRAMSPERSQUARECENTIMETER;
 extern const char *TXT_UNITS_PRES_POUNDSPERSQUAREINCH;
-// UNITS - VISIBILITY DISTANCE
+// UNIT SYMBOLS - VISIBILITY DISTANCE
 extern const char *TXT_UNITS_DIST_KILOMETERS;
 extern const char *TXT_UNITS_DIST_MILES;
+// UNIT SYMBOLS - PRECIPITATION
+extern const char *TXT_UNITS_PRECIP_MILLIMETERS;
+extern const char *TXT_UNITS_PRECIP_CENTIMETERS;
+extern const char *TXT_UNITS_PRECIP_INCHES;
 
 // MISCELLANEOUS MESSAGES
 // Title Case
@@ -132,10 +136,10 @@ extern const std::vector<String> TERM_METEOR;
 extern const std::vector<String> TERM_NUCLEAR;
 extern const std::vector<String> TERM_BIOHAZARD;
 extern const std::vector<String> TERM_EARTHQUAKE;
-extern const std::vector<String> TERM_TSUNAMI;
 extern const std::vector<String> TERM_FIRE;
 extern const std::vector<String> TERM_HEAT;
 extern const std::vector<String> TERM_WINTER;
+extern const std::vector<String> TERM_TSUNAMI;
 extern const std::vector<String> TERM_LIGHTNING;
 extern const std::vector<String> TERM_SANDSTORM;
 extern const std::vector<String> TERM_FLOOD;
@@ -267,6 +271,5 @@ extern const char *TXT_WL_CONNECTED;
 extern const char *TXT_WL_CONNECT_FAILED;
 extern const char *TXT_WL_CONNECTION_LOST;
 extern const char *TXT_WL_DISCONNECTED;
-
 
 #endif

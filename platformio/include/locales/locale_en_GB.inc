@@ -1,4 +1,4 @@
-/* American English locale data for esp32-weather-epd.
+/* British English locale data for esp32-weather-epd.
  * Copyright (C) 2022-2024  Luke Marzen
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,17 +31,17 @@
 //   LC_TIME category.
 //   https://www.gnu.org/software/libc/sources.html
 // D_T_FMT                 string for formatting date and time
-const char *LC_D_T_FMT     = "%a %d %b %Y %r %Z";
+const char *LC_D_T_FMT     = "%a %d %b %Y %T %Z";
 // LC_D_FMT                date format string
-const char *LC_D_FMT       = "%m/%d/%y";
+const char *LC_D_FMT       = "%d/%m/%y";
 // T_FMT                   time format string
-const char *LC_T_FMT       = "%r";
+const char *LC_T_FMT       = "%T";
 // T_FMT_AMPM              a.m. or p.m. time format string
-const char *LC_T_FMT_AMPM  = "%I:%M:%S %p";
+const char *LC_T_FMT_AMPM  = "%l:%M:%S %P %Z";
 // AM_STR                  Ante Meridian affix
-const char *LC_AM_STR      = "AM";
+const char *LC_AM_STR      = "am";
 // PM_STR                  Post Meridian affix
-const char *LC_PM_STR      = "PM";
+const char *LC_PM_STR      = "pm";
 // DAY_{1-7}               name of the n-th day of the week
 const char *LC_DAY[7]      = {"Sunday", "Monday", "Tuesday", "Wednesday",
                               "Thursday", "Friday", "Saturday"};
@@ -115,11 +115,15 @@ const char *TXT_UNITS_PRES_MILLIMETERSOFMERCURY     = "mmHg";
 const char *TXT_UNITS_PRES_INCHESOFMERCURY          = "inHg";
 const char *TXT_UNITS_PRES_MILLIBARS                = "mbar";
 const char *TXT_UNITS_PRES_ATMOSPHERES              = "atm";
-const char *TXT_UNITS_PRES_GRAMSPERSQUARECENTIMETER = "g/cm\262";
-const char *TXT_UNITS_PRES_POUNDSPERSQUAREINCH      = "lb/in\262";
-// UNITS - VISIBILITY DISTANCE
+const char *TXT_UNITS_PRES_GRAMSPERSQUARECENTIMETER = "g/cm\xB2";
+const char *TXT_UNITS_PRES_POUNDSPERSQUAREINCH      = "lb/in\xB2";
+// UNITS SYMBOLS - VISIBILITY DISTANCE
 const char *TXT_UNITS_DIST_KILOMETERS = "km";
 const char *TXT_UNITS_DIST_MILES      = "mi";
+// UNITS SYMBOLS - PRECIPITATION
+const char *TXT_UNITS_PRECIP_MILLIMETERS = "mm";
+const char *TXT_UNITS_PRECIP_CENTIMETERS = "cm";
+const char *TXT_UNITS_PRECIP_INCHES      = "in";
 
 // MISCELLANEOUS MESSAGES
 // Title Case
@@ -170,8 +174,8 @@ const char *TXT_CRIT_LOW_BATTERY_VOLTAGE = "Critically low battery voltage!";
 //
 // Here are a few examples, uncomment the array for your region (or create your
 // own).
-const std::vector<String> ALERT_URGENCY = {"statement", "watch", "advisory", "warning", "emergency"}; // US National Weather Service
-// const std::vector<String> ALERT_URGENCY = {"yellow", "amber", "red"};                 // United Kingdom's national weather service (MET Office)
+// const std::vector<String> ALERT_URGENCY = {"outlook", "statement", "watch", "advisory", "warning", "emergency"}; // US National Weather Service
+const std::vector<String> ALERT_URGENCY = {"yellow", "amber", "red"};                 // United Kingdom's national weather service (MET Office)
 // const std::vector<String> ALERT_URGENCY = {"minor", "moderate", "severe", "extreme"}; // METEO
 // const std::vector<String> ALERT_URGENCY = {}; // Disable urgency interpretation (algorithm will fallback to only prefer the most recently issued alerts)
 
@@ -191,15 +195,15 @@ const std::vector<String> TERM_BIOHAZARD =
     {"biohazard", "biological hazard"};
 const std::vector<String> TERM_EARTHQUAKE =
     {"earthquake"};
-const std::vector<String> TERM_TSUNAMI =
-    {"tsunami"};
 const std::vector<String> TERM_FIRE =
     {"fire", "red flag"};
 const std::vector<String> TERM_HEAT =
     {"heat"};
 const std::vector<String> TERM_WINTER =
-    {"blizzard", "winter", "ice", "snow", "sleet", "cold", "freezing rain",
-     "wind chill", "freeze", "frost", "hail"};
+    {"blizzard", "winter", "ice", "icy", "snow", "sleet", "cold",
+     "freezing rain", "wind chill", "freeze", "frost", "hail"};
+const std::vector<String> TERM_TSUNAMI =
+    {"tsunami", "surf"};
 const std::vector<String> TERM_LIGHTNING =
     {"thunderstorm", "storm cell", "pulse storm", "squall line", "supercell",
      "lightning"};
@@ -207,7 +211,7 @@ const std::vector<String> TERM_SANDSTORM =
     {"sandstorm", "blowing dust", "dust storm"};
 const std::vector<String> TERM_FLOOD =
     {"flood", "storm surge", "seiche", "swell", "high seas", "high tides",
-     "tidal surge"};
+     "tidal surge", "hydrologic"};
 const std::vector<String> TERM_VOLCANO =
     {"volcanic", "ash", "volcano", "eruption"};
 const std::vector<String> TERM_AIR_QUALITY =
@@ -240,7 +244,7 @@ extern "C" {
 //   HONG_KONG_AQHI       INDIA_AQI            CHINA_AQI
 //   SINGAPORE_PSI        SOUTH_KOREA_CAI      UNITED_KINGDOM_DAQI
 //   UNITED_STATES_AQI
-const aqi_scale_t AQI_SCALE = UNITED_STATES_AQI;
+const aqi_scale_t AQI_SCALE = UNITED_KINGDOM_DAQI;
 
 const char *AUSTRALIA_AQI_TXT[6] =
 {

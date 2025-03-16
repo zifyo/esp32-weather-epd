@@ -1,5 +1,5 @@
 /* Configuration options for esp32-weather-epd.
- * Copyright (C) 2022-2024  Luke Marzen
+ * Copyright (C) 2022-2025  Luke Marzen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,14 @@ const uint8_t BME_ADDRESS = 0x76; // If sensor does not work, try 0x77
 const char *WIFI_SSID     = "ssid";
 const char *WIFI_PASSWORD = "password";
 const unsigned long WIFI_TIMEOUT = 10000; // ms, WiFi connection timeout.
+
+// HTTP
+// The following errors are likely the result of insuffient http client tcp 
+// timeout:
+//   -1   Connection Refused
+//   -11  Read Timeout
+//   -258 Deserialization Incomplete Input
+const unsigned HTTP_CLIENT_TCP_TIMEOUT = 10000; // ms
 
 // OPENWEATHERMAP API
 // OpenWeatherMap API key, https://openweathermap.org/
@@ -107,14 +115,24 @@ const char *NTP_SERVER_2 = "time.nist.gov";
 // NTP_TIMEOUT or select closer/lower latency time servers.
 const unsigned long NTP_TIMEOUT = 20000; // ms
 // Sleep duration in minutes. (aka how often esp32 will wake for an update)
-// Aligned to the nearest minute boundary and must evenly divide 60.
+// Aligned to the nearest minute boundary.
 // For example, if set to 30 (minutes) the display will update at 00 or 30
-// minutes past the hour. (range: [2-60])
-const long SLEEP_DURATION = 30;
+// minutes past the hour. (range: [2-1440])
+// Note: The OpenWeatherMap model is updated every 10 minutes, so updating more
+//       frequently than that is unnessesary.
+const int SLEEP_DURATION = 30; // minutes
+// Bed Time Power Savings.
 // If BED_TIME == WAKE_TIME, then this battery saving feature will be disabled.
 // (range: [0-23])
 const int BED_TIME  = 00; // Last update at 00:00 (midnight) until WAKE_TIME.
 const int WAKE_TIME = 06; // Hour of first update after BED_TIME, 06:00.
+// Note that the minute alignment of SLEEP_DURATION begins at WAKE_TIME even if
+// Bed Time Power Savings is disabled.
+// For example, if WAKE_TIME = 00 (midnight) and SLEEP_DURATION = 120, then the
+// display will update at 00:00, 02:00, 04:00... until BED_TIME.
+// If you desire to have your display refresh exactly once a day, you should set
+// SLEEP_DURATION = 1440, and you can set the time it should update each day by
+// setting both BED_TIME and WAKE_TIME to the hour you want it to update.
 
 // HOURLY OUTLOOK GRAPH
 // Number of hours to display on the outlook graph. (range: [8-48])
@@ -127,13 +145,15 @@ const int HOURLY_GRAPH_MAX = 24;
 // minutes). Once the battery voltage has fallen to CRIT_LOW_BATTERY_VOLTAGE,
 // the esp32 will hibernate and a manual press of the reset (RST) button to
 // begin operating again.
-const uint32_t MAX_BATTERY_VOLTAGE      = 4200; // (millivolts)
-const uint32_t WARN_BATTERY_VOLTAGE     = 3400; // (millivolts)
-const uint32_t LOW_BATTERY_VOLTAGE      = 3200; // (millivolts)
-const uint32_t VERY_LOW_BATTERY_VOLTAGE = 3100; // (millivolts)
-const uint32_t CRIT_LOW_BATTERY_VOLTAGE = 3000; // (millivolts)
+const uint32_t WARN_BATTERY_VOLTAGE     = 3535; // (millivolts) ~20%
+const uint32_t LOW_BATTERY_VOLTAGE      = 3462; // (millivolts) ~10%
+const uint32_t VERY_LOW_BATTERY_VOLTAGE = 3442; // (millivolts)  ~8%
+const uint32_t CRIT_LOW_BATTERY_VOLTAGE = 3404; // (millivolts)  ~5%
 const unsigned long LOW_BATTERY_SLEEP_INTERVAL      = 30;  // (minutes)
 const unsigned long VERY_LOW_BATTERY_SLEEP_INTERVAL = 120; // (minutes)
+// Battery voltage calculations are based on a typical 3.7v LiPo.
+const uint32_t MAX_BATTERY_VOLTAGE = 4200; // (millivolts)
+const uint32_t MIN_BATTERY_VOLTAGE = 3000; // (millivolts)
 
 // See config.h for the below options
 // E-PAPER PANEL
